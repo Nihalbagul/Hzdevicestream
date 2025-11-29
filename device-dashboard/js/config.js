@@ -33,7 +33,38 @@ export const CONFIG = {
         phaseImbalanceMinDuration: 2 // minutes
     },
     
-    // SSE Server
-    SSE_URL: 'http://localhost:8080/stream'
+    // SSE Server - Auto-detect based on environment
+    // To set a custom backend URL, add this before loading dashboard.js:
+    // <script>window.SSE_BACKEND_URL = 'https://your-backend-url.com/stream';</script>
+    SSE_URL: (() => {
+        // Check if custom URL is set via window variable
+        if (typeof window !== 'undefined' && window.SSE_BACKEND_URL) {
+            return window.SSE_BACKEND_URL;
+        }
+        
+        // In production, detect environment
+        if (typeof window !== 'undefined') {
+            const isProduction = window.location.hostname !== 'localhost' && 
+                                window.location.hostname !== '127.0.0.1' &&
+                                window.location.hostname !== '';
+            
+            if (isProduction) {
+                // Try to get from window.ENV (set via script tag)
+                if (window.ENV?.SSE_URL) {
+                    return window.ENV.SSE_URL;
+                }
+                
+                // Default: You need to set this to your backend URL
+                // Update this line with your deployed backend URL:
+                // return 'https://your-backend.onrender.com/stream';
+                
+                // For now, return a placeholder that will show an error
+                console.warn('SSE_URL not configured. Please set window.SSE_BACKEND_URL or update config.js');
+                return 'https://your-backend-url-here.com/stream';
+            }
+        }
+        // Development: localhost
+        return 'http://localhost:8080/stream';
+    })()
 };
 
