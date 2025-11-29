@@ -1,0 +1,126 @@
+/* ============================================
+   Insights Component
+   ============================================ */
+
+.insights {
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    margin-bottom: 3rem;
+    animation: fadeInUp 1.2s ease-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.insights::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+    animation: rotate 20s linear infinite;
+    pointer-events: none;
+}
+
+.section-title {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 2rem;
+    text-align: center;
+    background: linear-gradient(135deg, #ffffff 0%, #a0aec0 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, var(--primary), transparent);
+    border-radius: 2px;
+    opacity: 0.6;
+}
+
+.sparkle {
+    font-size: 1.5rem;
+    animation: sparkle 4s ease-in-out infinite;
+}
+
+.insight-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 1.5rem;
+}
+
+.insight-card {
+    padding: 1.5rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-left: 4px solid var(--primary);
+    border-radius: 1rem;
+    transition: all 0.5s ease;
+    animation: slideInLeft 1s ease-out backwards;
+    position: relative;
+    overflow: hidden;
+}
+
+.insight-card:nth-child(1) { animation-delay: 0.1s; }
+.insight-card:nth-child(2) { animation-delay: 0.2s; }
+.insight-card:nth-child(3) { animation-delay: 0.3s; }
+
+.insight-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--primary), var(--secondary));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.5s ease;
+}
+
+.insight-card:hover::before {
+    transform: scaleY(1);
+}
+
+.insight-card:hover {
+    transform: translateX(5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.insight-card.warning {
+    border-left-color: var(--warning);
+    background: rgba(245, 158, 11, 0.1);
+}
+
+.insight-card.danger {
+    border-left-color: var(--danger);
+    background: rgba(239, 68, 68, 0.1);
+}
+
+.insight-card h3 {
+    font-size: 1.125rem;
+    margin-bottom: 0.75rem;
+    color: var(--text);
+    font-weight: 700;
+}
+
+.insight-card p {
+    font-size: 0.9375rem;
+    color: var(--text-light);
+    line-height: 1.6;
+}
+

@@ -1,0 +1,20 @@
+{
+  "name": "device-stream-dashboard",
+  "version": "1.0.0",
+  "description": "Real-time device stream dashboard with KPIs and insights",
+  "main": "live_sse_server.js",
+  "scripts": {
+    "start": "node live_sse_server.js",
+    "dev": "node live_sse_server.js"
+  },
+  "keywords": [
+    "dashboard",
+    "streaming",
+    "sse",
+    "iot"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {}
+}
+

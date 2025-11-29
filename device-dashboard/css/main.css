@@ -1,0 +1,38 @@
+/* ============================================
+   Main Stylesheet - Imports All Modules
+   ============================================ */
+
+/* Core */
+@import url('./variables.css');
+@import url('./base.css');
+@import url('./animations.css');
+
+/* Components */
+@import url('./components/background.css');
+@import url('./components/glass.css');
+@import url('./components/header.css');
+@import url('./components/controls.css');
+@import url('./components/status-badge.css');
+@import url('./components/kpi-cards.css');
+@import url('./components/insights.css');
+@import url('./components/charts.css');
+@import url('./components/loading.css');
+@import url('./components/footer.css');
+@import url('./components/responsive.css');
+
+/* Layout */
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 1800px;
+    margin: 0 auto;
+    width: 100%;
+    position: relative;
+    z-index: 10;
+}
+
+/* Cursor Effects */
+.kpi-card, .insight-card, .chart-container {
+    cursor: pointer;
+}
+

@@ -1,0 +1,40 @@
+/* ============================================
+   CSS Variables - Design Tokens
+   ============================================ */
+
+:root {
+    /* Colors - Primary */
+    --primary: #6366f1;
+    --primary-dark: #4f46e5;
+    --primary-light: #818cf8;
+    
+    /* Colors - Status */
+    --secondary: #10b981;
+    --danger: #ef4444;
+    --warning: #f59e0b;
+    
+    /* Colors - Accent */
+    --purple: #8b5cf6;
+    --cyan: #06b6d4;
+    --pink: #ec4899;
+    --orange: #f97316;
+    
+    /* Background Gradients */
+    --bg-gradient-1: #0f0c29;
+    --bg-gradient-2: #302b63;
+    --bg-gradient-3: #24243e;
+    
+    /* Glass Morphism */
+    --glass-bg: rgba(255, 255, 255, 0.1);
+    --glass-border: rgba(255, 255, 255, 0.2);
+    --glass-bg-hover: rgba(255, 255, 255, 0.15);
+    
+    /* Text Colors */
+    --text: #ffffff;
+    --text-light: #a0aec0;
+    
+    /* Shadows */
+    --shadow-color: rgba(0, 0, 0, 0.3);
+    --shadow-glow: rgba(99, 102, 241, 0.4);
+}
+

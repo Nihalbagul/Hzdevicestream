@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Device Stream Dashboard - LimelightIT</title>
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+    <div class="animated-bg"></div>
+    <div class="particles"></div>
+    <div id="loadingScreen" class="loading-screen">
+        <div class="loader">
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+            <div class="loader-ring"></div>
+        </div>
+        <h2>Loading Dashboard...</h2>
+    </div>
+    <header role="banner" class="glass-header">
+        <div class="header-content">
+            <h1 class="glow-text">
+                <span class="icon">⚡</span>
+                Device Stream Dashboard
+            </h1>
+            <div class="live-indicator">
+                <span class="pulse-dot"></span>
+                <span>LIVE</span>
+            </div>
+        </div>
+        <nav role="navigation" aria-label="Dashboard controls">
+            <div class="controls">
+                <label for="dataSource">Data Source:</label>
+                <select id="dataSource" aria-label="Select data source">
+                    <option value="sse">Live SSE Stream</option>
+                    <option value="replay">Replay JSONL</option>
+                </select>
+                <input type="file" id="fileInput" accept=".jsonl,.txt" style="display:none;">
+                <button id="replayBtn" style="display:none;">📁 Load File</button>
+                <label for="windowSize">Time Window:</label>
+                <select id="windowSize" aria-label="Select time window">
+                    <option value="5">Last 5 min</option>
+                    <option value="15" selected>Last 15 min</option>
+                    <option value="30">Last 30 min</option>
+                </select>
+                <button id="exportBtn" aria-label="Export data to CSV">💾 Export CSV</button>
+            </div>
+        </nav>
+    </header>
+
+    <main role="main">
+        <!-- Status Badge -->
+        <div id="statusBadge" class="status-badge" role="status" aria-live="polite"></div>
+
+        <!-- KPIs Section -->
+        <section class="kpis" aria-label="Key Performance Indicators">
+            <div class="kpi-card card-3d" data-color="green">
+                <div class="kpi-icon">📈</div>
+                <h2>Uptime %</h2>
+                <div class="kpi-value" id="uptimePct">0.0%</div>
+                <div class="kpi-trend"></div>
+            </div>
+            <div class="kpi-card card-3d" data-color="orange">
+                <div class="kpi-icon">⏸️</div>
+                <h2>Idle %</h2>
+                <div class="kpi-value" id="idlePct">0.0%</div>
+                <div class="kpi-trend"></div>
+            </div>
+            <div class="kpi-card card-3d" data-color="gray">
+                <div class="kpi-icon">⏹️</div>
+                <h2>Off %</h2>
+                <div class="kpi-value" id="offPct">0.0%</div>
+                <div class="kpi-trend"></div>
+            </div>
+            <div class="kpi-card card-3d" data-color="blue">
+                <div class="kpi-icon">⚡</div>
+                <h2>Avg Power (kW)</h2>
+                <div class="kpi-value" id="avgKw">0.0</div>
+                <div class="kpi-trend"></div>
+            </div>
+            <div class="kpi-card card-3d" data-color="purple">
+                <div class="kpi-icon">🔋</div>
+                <h2>Energy (kWh)</h2>
+                <div class="kpi-value" id="energy">0.0</div>
+                <div class="kpi-trend"></div>
+            </div>
+            <div class="kpi-card card-3d" data-color="cyan">
+                <div class="kpi-icon">📊</div>
+                <h2>Avg PF</h2>
+                <div class="kpi-value" id="avgPf">0.0</div>
+                <div class="kpi-trend"></div>
+            </div>
+            <div class="kpi-card card-3d" data-color="pink">
+                <div class="kpi-icon">🚀</div>
+                <h2>Throughput</h2>
+                <div class="kpi-value" id="throughput">0.0</div>
+                <div class="kpi-subtitle">units/min</div>
+                <div class="kpi-trend"></div>
+            </div>
+            <div class="kpi-card card-3d" data-color="red">
+                <div class="kpi-icon">⚖️</div>
+                <h2>Phase Imbalance</h2>
+                <div class="kpi-value" id="phaseImbalance">0.0%</div>
+                <div class="kpi-trend"></div>
+            </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section class="insights glass-card" aria-label="Auto-generated Insights">
+            <h2 class="section-title">
+                <span class="sparkle">✨</span>
+                AI-Powered Insights
+                <span class="sparkle">✨</span>
+            </h2>
+            <div class="insight-cards" id="insightsContainer">
+                <div class="insight-card">Loading insights...</div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="charts" aria-label="Data Visualization">
+            <div class="chart-container glass-card card-3d">
+                <h2 class="chart-title">
+                    <span class="chart-icon">📉</span>
+                    Power Trend & State
+                </h2>
+                <div class="chart-wrapper">
+                    <canvas id="powerChart" role="img" aria-label="Power trend and state chart"></canvas>
+                </div>
+            </div>
+            <div class="chart-row">
+                <div class="chart-container mini glass-card card-3d">
+                    <h2 class="chart-title">
+                        <span class="chart-icon">⚡</span>
+                        Current (A)
+                    </h2>
+                    <div class="chart-wrapper">
+                        <canvas id="currentChart" role="img" aria-label="Phase current chart"></canvas>
+                    </div>
+                </div>
+                <div class="chart-container mini glass-card card-3d">
+                    <h2 class="chart-title">
+                        <span class="chart-icon">🔌</span>
+                        Voltage (V)
+                    </h2>
+                    <div class="chart-wrapper">
+                        <canvas id="voltageChart" role="img" aria-label="Phase voltage chart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="chart-container glass-card card-3d">
+                <h2 class="chart-title">
+                    <span class="chart-icon">📊</span>
+                    Throughput (units/min)
+                </h2>
+                <div class="chart-wrapper">
+                    <canvas id="throughputChart" role="img" aria-label="Throughput chart"></canvas>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <p>Device Stream Dashboard - LimelightIT Challenge</p>
+    </footer>
+
+    <script type="module" src="js/dashboard.js"></script>
+</body>
+</html>
+

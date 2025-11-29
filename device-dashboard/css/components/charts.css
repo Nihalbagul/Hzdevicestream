@@ -1,0 +1,101 @@
+/* ============================================
+   Charts Component
+   ============================================ */
+
+.charts {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.chart-container {
+    padding: 2rem;
+    border-radius: 1.5rem;
+    animation: fadeInScale 0.8s ease-out backwards;
+    position: relative;
+    transition: all 0.4s ease;
+}
+
+.chart-container:nth-child(1) { animation-delay: 0.1s; }
+.chart-container:nth-child(2) { animation-delay: 0.2s; }
+.chart-container:nth-child(3) { animation-delay: 0.3s; }
+
+.chart-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(99, 102, 241, 0.05) 0%,
+        transparent 50%,
+        rgba(16, 185, 129, 0.05) 100%
+    );
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+}
+
+.chart-container:hover::before {
+    opacity: 1;
+}
+
+.chart-title {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    position: relative;
+    padding-bottom: 0.5rem;
+}
+
+.chart-title::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary), transparent);
+    border-radius: 1px;
+}
+
+.chart-icon {
+    font-size: 1.75rem;
+}
+
+.chart-wrapper {
+    position: relative;
+    background: rgba(0, 0, 0, 0.2);
+    border-radius: 1rem;
+    padding: 1rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: all 0.4s ease;
+}
+
+.chart-container:hover .chart-wrapper {
+    background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(99, 102, 241, 0.3);
+    box-shadow: inset 0 0 20px rgba(99, 102, 241, 0.1);
+}
+
+.chart-container canvas {
+    max-height: 400px;
+}
+
+.chart-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+    gap: 2rem;
+}
+
+.chart-container.mini canvas {
+    max-height: 280px;
+}
+
